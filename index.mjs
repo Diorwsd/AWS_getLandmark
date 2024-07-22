@@ -76,11 +76,22 @@ export const handler = async (event) => {
         };
     }
     const result = await getRestQuery(landmark);
-    console.log(`getRestQuery 結果`, JSON.stringify(result));
+    // console.log(`getRestQuery 結果`, JSON.stringify(result));
     console.log(`getRestQuery 結果`, (result));
+
+    // Map each result into desired format
+    const items = result.map(res => ({
+        addr: res.FULL_ADDR,
+        x: res.X,
+        y: res.Y
+    }));
+
     const response = {
         statusCode: 200,
-       body: JSON.stringify({ result }),
+        headers: {
+            "Content-Type": "application/json"
+        },
+       body: JSON.stringify({items} ),
 //         body:  result ,
     };
     return response;
